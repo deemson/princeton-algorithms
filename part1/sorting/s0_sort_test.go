@@ -21,7 +21,7 @@ func forEachAlgorithm[T any](t *testing.T, less compare.Func[T], f func(t *testi
 		{"MergeSort", sorting.MergeSort[T]},
 		{"BottomUpMergeSort", sorting.BottomUpMergeSort[T]},
 		{"QuickSort", sorting.QuickSort[T]},
-		//{"HeapSort", alg06sorting.HeapSort[T]},
+		{"HeapSort", sorting.HeapSort[T]},
 	}
 	for _, namedSort := range namedSorts {
 		t.Run(namedSort.name, func(t *testing.T) {
