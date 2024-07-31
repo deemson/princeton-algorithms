@@ -1,7 +1,7 @@
 package binaryheap_test
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/sliceadapter"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/part1/binaryheap"
 	"github.com/stretchr/testify/assert"
 	"strings"
@@ -58,7 +58,7 @@ func TestVisualize(t *testing.T) {
 		t.Run(testCase.input, func(t *testing.T) {
 			sliceOfCharStrings := sliceStringIntoCharacters(testCase.input)
 			actual := binaryheap.Visualize(
-				sliceadapter.New(sliceOfCharStrings),
+				collection.Slice(sliceOfCharStrings),
 				stringAsIs,
 			)
 			assert.Equal(t, strings.Join(testCase.expected, "\n"), actual)

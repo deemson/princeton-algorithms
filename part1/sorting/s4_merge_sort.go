@@ -1,8 +1,8 @@
 package sorting
 
 import (
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
-	"github.com/deemson/princeton-algorithms/lib/collection/sliceadapter"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 )
 
@@ -10,13 +10,13 @@ import (
 // The execution time is as fast as O(N*log2(N)).
 // Traditional implementation via recursion.
 func MergeSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
-	aux := sliceadapter.New(make([]T, array.Size()))
+	aux := collection.Slice(make([]T, array.Size()))
 	mergeSort(array, aux, less, 0, array.Size()-1)
 }
 
 // BottomUpMergeSort implements the same merge sort only without recursion
 func BottomUpMergeSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
-	aux := sliceadapter.New(make([]T, array.Size()))
+	aux := collection.Slice(make([]T, array.Size()))
 	// partitionSize size grows as 1 2 4 8 ...
 	partitionSize := 1
 	for partitionSize < array.Size() {

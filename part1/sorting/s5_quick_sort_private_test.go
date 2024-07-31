@@ -1,7 +1,7 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/sliceadapter"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/stretchr/testify/assert"
 	"sort"
@@ -38,7 +38,7 @@ func TestPartition(t *testing.T) {
 	for name, testCase := range testCases {
 		t.Run(name, func(t *testing.T) {
 			actualIndex := partition(
-				sliceadapter.New[int](testCase.actual),
+				collection.Slice[int](testCase.actual),
 				compare.OrderedLess[int],
 				0, len(testCase.actual)-1,
 			)
@@ -50,7 +50,7 @@ func TestPartition(t *testing.T) {
 
 func TestShuffle(t *testing.T) {
 	slice := []int{1, 2, 3, 4, 5}
-	shuffle[int](sliceadapter.New(slice))
+	shuffle[int](collection.Slice(slice))
 	assert.NotEqual(t, []int{1, 2, 3, 4, 5}, slice)
 	sort.Slice(slice, func(i, j int) bool {
 		return slice[i] < slice[j]

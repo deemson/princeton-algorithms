@@ -1,10 +1,10 @@
-package sliceadapter
+package collection
 
 import (
 	"github.com/deemson/princeton-algorithms/lib/collection/iterator"
 )
 
-func New[T any](slice []T) *SliceAdapter[T] {
+func Slice[T any](slice []T) *SliceAdapter[T] {
 	return &SliceAdapter[T]{
 		slice: slice,
 	}

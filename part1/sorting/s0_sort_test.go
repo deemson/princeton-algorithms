@@ -1,9 +1,9 @@
 package sorting_test
 
 import (
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
 	"github.com/deemson/princeton-algorithms/lib/collection/sequence"
-	"github.com/deemson/princeton-algorithms/lib/collection/sliceadapter"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/deemson/princeton-algorithms/part1/sorting"
 	"github.com/stretchr/testify/assert"
@@ -34,7 +34,7 @@ func forEachAlgorithm[T any](t *testing.T, less compare.Func[T], f func(t *testi
 
 func TestSort_BunchOfInts(t *testing.T) {
 	forEachAlgorithm(t, compare.OrderedLess[int], func(t *testing.T, sort func(array indexed.SizedMutable[int])) {
-		input := sliceadapter.New([]int{
+		input := collection.Slice([]int{
 			42,
 			17,
 			100500,
@@ -64,7 +64,7 @@ func TestSort_BunchOfInts(t *testing.T) {
 
 func TestSort_BunchOfStrings(t *testing.T) {
 	forEachAlgorithm(t, compare.OrderedLess[string], func(t *testing.T, sort func(array indexed.SizedMutable[string])) {
-		input := sliceadapter.New([]string{"super", "algorithm", "main"})
+		input := collection.Slice([]string{"super", "algorithm", "main"})
 		expected := []string{"algorithm", "main", "super"}
 		sort(input)
 		actual := sequence.ToSlice[string](input)
