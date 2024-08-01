@@ -67,6 +67,6 @@ func (d Deque[T]) Set(index int, item T) {
 	d.algorithm.Set(index, item)
 }
 
-func (d Deque[T]) Each(f func(item T) bool) {
-	collection.Each(d.Iterator(), f)
+func (d Deque[T]) Each(f func(item T) bool) bool {
+	return collection.Each(d.Iterator(), f)
 }

@@ -29,11 +29,9 @@ func (a unorderedLinkedListAlgorithm[K, V]) Size() int {
 }
 
 func (a unorderedLinkedListAlgorithm[K, V]) Get(key K) (V, bool) {
-	isFound := false
 	var value V
-	a.deque.Each(func(pair Pair[K, V]) bool {
+	isFound := !a.deque.Each(func(pair Pair[K, V]) bool {
 		if a.equal(pair.Key, key) {
-			isFound = true
 			value = pair.Value
 			return false
 		}
@@ -45,7 +43,7 @@ func (a unorderedLinkedListAlgorithm[K, V]) Get(key K) (V, bool) {
 func (a unorderedLinkedListAlgorithm[K, V]) Set(key K, value V) {
 	indexToReplace := -1
 	index := 0
-	a.deque.Each(func(pair Pair[K, V]) bool {
+	isFound := !a.deque.Each(func(pair Pair[K, V]) bool {
 		if a.equal(pair.Key, key) {
 			indexToReplace = index
 			return false
@@ -57,7 +55,7 @@ func (a unorderedLinkedListAlgorithm[K, V]) Set(key K, value V) {
 		Key:   key,
 		Value: value,
 	}
-	if indexToReplace > -1 {
+	if isFound {
 		a.deque.Set(indexToReplace, pair)
 	} else {
 		a.deque.AddLast(pair)
@@ -67,7 +65,7 @@ func (a unorderedLinkedListAlgorithm[K, V]) Set(key K, value V) {
 func (a unorderedLinkedListAlgorithm[K, V]) Delete(key K) bool {
 	indexToDelete := -1
 	index := 0
-	a.deque.Each(func(pair Pair[K, V]) bool {
+	isFound := !a.deque.Each(func(pair Pair[K, V]) bool {
 		if a.equal(pair.Key, key) {
 			indexToDelete = index
 			return false
@@ -75,11 +73,10 @@ func (a unorderedLinkedListAlgorithm[K, V]) Delete(key K) bool {
 		index++
 		return true
 	})
-	if indexToDelete > -1 {
+	if isFound {
 		a.deque.RemoveAtIndex(indexToDelete)
-		return true
 	}
-	return false
+	return isFound
 }
 
 func (a unorderedLinkedListAlgorithm[K, V]) keys() Set[K] {
