@@ -8,7 +8,9 @@ import (
 )
 
 type allAlgorithmsParams[K, V any] struct {
-	equal compare.Func[K]
+	less     compare.Func[K]
+	equal    compare.Func[K]
+	capacity int
 }
 
 func (p allAlgorithmsParams[K, V]) do(t *testing.T, f func(t *testing.T, symbolTable symboltable.SymbolTable[K, V])) {
@@ -17,6 +19,7 @@ func (p allAlgorithmsParams[K, V]) do(t *testing.T, f func(t *testing.T, symbolT
 		symbolTable symboltable.SymbolTable[K, V]
 	}{
 		{"UnorderedLinkedList", symboltable.UnorderedLinkedList[K, V](p.equal)},
+		{"RankedSlice", symboltable.RankedSlice[K, V](p.less, p.equal, p.capacity)},
 	}
 	for _, namedSymbolTable := range namedSymbolTables {
 		t.Run(namedSymbolTable.name, func(t *testing.T) {
@@ -27,7 +30,9 @@ func (p allAlgorithmsParams[K, V]) do(t *testing.T, f func(t *testing.T, symbolT
 
 func TestSymbolTable(t *testing.T) {
 	allAlgorithmsParams[string, int]{
-		equal: compare.ComparableEqual[string],
+		less:     compare.OrderedLess[string],
+		equal:    compare.ComparableEqual[string],
+		capacity: 2,
 	}.do(t, func(t *testing.T, symbolTable symboltable.SymbolTable[string, int]) {
 		symbolTable.Set("one", 1)
 		symbolTable.Set("two", 2)
