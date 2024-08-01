@@ -66,3 +66,7 @@ func (d Deque[T]) Set(index int, item T) {
 	ensureIndexLessThanSize(index, d.Size())
 	d.algorithm.Set(index, item)
 }
+
+func (d Deque[T]) Each(f func(item T) bool) {
+	collection.Each(d.Iterator(), f)
+}

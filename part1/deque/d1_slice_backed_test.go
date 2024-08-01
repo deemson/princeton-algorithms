@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestSliceBacked_GrowByAddingLast(t *testing.T) {
-	d := deque.SliceBacked[int](2)
+func TestSlice_GrowByAddingLast(t *testing.T) {
+	d := deque.Slice[int](2)
 	d.AddLast(1)
 	d.AddLast(2)
 	d.AddLast(3)
@@ -15,8 +15,8 @@ func TestSliceBacked_GrowByAddingLast(t *testing.T) {
 	assert.Equal(t, []int{1, 2, 3}, d.ToSlice())
 }
 
-func TestSliceBacked_GrowByAddingFirst(t *testing.T) {
-	d := deque.SliceBacked[int](2)
+func TestSlice_GrowByAddingFirst(t *testing.T) {
+	d := deque.Slice[int](2)
 	d.AddFirst(1)
 	d.AddFirst(2)
 	d.AddFirst(3)
@@ -24,8 +24,8 @@ func TestSliceBacked_GrowByAddingFirst(t *testing.T) {
 	assert.Equal(t, []int{3, 2, 1}, d.ToSlice())
 }
 
-func TestSliceBacked_ShrinkByAddingLastAndRemovingFirst(t *testing.T) {
-	d := deque.SliceBacked[int](4)
+func TestSlice_ShrinkByAddingLastAndRemovingFirst(t *testing.T) {
+	d := deque.Slice[int](4)
 	d.AddLast(1)
 	d.AddLast(2)
 	d.AddLast(3)
@@ -37,8 +37,8 @@ func TestSliceBacked_ShrinkByAddingLastAndRemovingFirst(t *testing.T) {
 	assert.True(t, d.IsEmpty())
 }
 
-func TestSliceBacked_ShrinkByAddingFirstAndRemovingLast(t *testing.T) {
-	d := deque.SliceBacked[int](4)
+func TestSlice_ShrinkByAddingFirstAndRemovingLast(t *testing.T) {
+	d := deque.Slice[int](4)
 	d.AddFirst(1)
 	d.AddFirst(2)
 	d.AddFirst(3)
@@ -51,8 +51,8 @@ func TestSliceBacked_ShrinkByAddingFirstAndRemovingLast(t *testing.T) {
 	assert.True(t, d.IsEmpty())
 }
 
-func TestSliceBacked_AddAtIndex_MovingItemsToBothEnds(t *testing.T) {
-	d := deque.SliceBacked[int](2)
+func TestSlice_AddAtIndex_MovingItemsToBothEnds(t *testing.T) {
+	d := deque.Slice[int](2)
 	d.AddLast(1)
 	d.AddLast(3)
 	d.AddLast(5)
@@ -62,8 +62,8 @@ func TestSliceBacked_AddAtIndex_MovingItemsToBothEnds(t *testing.T) {
 	assert.Equal(t, []int{1, 2, 3, 4, 5}, d.ToSlice())
 }
 
-func TestSliceBacked_RemoveAtIndex_MovingItemsToBothEnds(t *testing.T) {
-	d := deque.SliceBacked[int](2)
+func TestSlice_RemoveAtIndex_MovingItemsToBothEnds(t *testing.T) {
+	d := deque.Slice[int](2)
 	d.AddLast(1)
 	d.AddLast(2)
 	d.AddLast(3)
@@ -75,8 +75,8 @@ func TestSliceBacked_RemoveAtIndex_MovingItemsToBothEnds(t *testing.T) {
 	assert.Equal(t, []int{1, 3, 5}, d.ToSlice())
 }
 
-func TestSliceBacked_RemoveAtIndex_FirstItemIndexWrapAround(t *testing.T) {
-	d := deque.SliceBacked[int](4)
+func TestSlice_RemoveAtIndex_FirstItemIndexWrapAround(t *testing.T) {
+	d := deque.Slice[int](4)
 	d.AddLast(2)
 	d.AddFirst(1)
 	assert.Equal(t, []int{1, 2}, d.ToSlice())

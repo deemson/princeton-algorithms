@@ -4,9 +4,9 @@ import (
 	"github.com/deemson/princeton-algorithms/lib/collection"
 )
 
-func LinkedListBacked[T any]() Deque[T] {
+func LinkedList[T any]() Deque[T] {
 	return Deque[T]{
-		algorithm: &linedListBackedAlgorithm[T]{
+		algorithm: &linedListAlgorithm[T]{
 			size: 0,
 			head: nil,
 			tail: nil,
@@ -14,31 +14,31 @@ func LinkedListBacked[T any]() Deque[T] {
 	}
 }
 
-type linedListBackedAlgorithm[T any] struct {
+type linedListAlgorithm[T any] struct {
 	size int
 	head *linkedListNode[T]
 	tail *linkedListNode[T]
 }
 
-func (a *linedListBackedAlgorithm[T]) Size() int {
+func (a *linedListAlgorithm[T]) Size() int {
 	return a.size
 }
 
-func (a *linedListBackedAlgorithm[T]) Get(index int) T {
+func (a *linedListAlgorithm[T]) Get(index int) T {
 	return a.nodeAtIndex(index).item
 }
 
-func (a *linedListBackedAlgorithm[T]) Iterator() collection.Iterator[T] {
+func (a *linedListAlgorithm[T]) Iterator() collection.Iterator[T] {
 	return &linkedListIterator[T]{
 		node: a.head,
 	}
 }
 
-func (a *linedListBackedAlgorithm[T]) Set(index int, item T) {
+func (a *linedListAlgorithm[T]) Set(index int, item T) {
 	a.nodeAtIndex(index).item = item
 }
 
-func (a *linedListBackedAlgorithm[T]) AddAtIndex(index int, item T) {
+func (a *linedListAlgorithm[T]) AddAtIndex(index int, item T) {
 	if index == a.size {
 		prevTail := a.tail
 		a.tail = &linkedListNode[T]{
@@ -69,7 +69,7 @@ func (a *linedListBackedAlgorithm[T]) AddAtIndex(index int, item T) {
 	}
 }
 
-func (a *linedListBackedAlgorithm[T]) RemoveAtIndex(index int) T {
+func (a *linedListAlgorithm[T]) RemoveAtIndex(index int) T {
 	var item T
 	switch index {
 	case 0:
@@ -94,7 +94,7 @@ func (a *linedListBackedAlgorithm[T]) RemoveAtIndex(index int) T {
 	return item
 }
 
-func (a *linedListBackedAlgorithm[T]) nodeAtIndex(index int) *linkedListNode[T] {
+func (a *linedListAlgorithm[T]) nodeAtIndex(index int) *linkedListNode[T] {
 	var node *linkedListNode[T]
 	// loop through the nodes either from head or tail -- whichever requires fewer iterations
 	if 2*index < a.size-1 {

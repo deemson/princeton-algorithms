@@ -9,9 +9,9 @@ func makeSlice(capacity int) []any {
 	return slice
 }
 
-func SliceBacked[T any](capacity int) Deque[T] {
+func Slice[T any](capacity int) Deque[T] {
 	return Deque[T]{
-		algorithm: &sliceBackedAlgorithm[T]{
+		algorithm: &sliceAlgorithm[T]{
 			slice:          makeSlice(capacity),
 			firstItemIndex: 0,
 			lastItemIndex:  0,
@@ -20,26 +20,26 @@ func SliceBacked[T any](capacity int) Deque[T] {
 	}
 }
 
-type sliceBackedAlgorithm[T any] struct {
+type sliceAlgorithm[T any] struct {
 	slice          []any
 	firstItemIndex int
 	lastItemIndex  int
 	size           int
 }
 
-func (a *sliceBackedAlgorithm[T]) Size() int {
+func (a *sliceAlgorithm[T]) Size() int {
 	return a.size
 }
 
-func (a *sliceBackedAlgorithm[T]) Get(index int) T {
+func (a *sliceAlgorithm[T]) Get(index int) T {
 	return a.slice[a.normalizeIndex(index)].(T)
 }
 
-func (a *sliceBackedAlgorithm[T]) Set(index int, item T) {
+func (a *sliceAlgorithm[T]) Set(index int, item T) {
 	a.slice[a.normalizeIndex(index)] = item
 }
 
-func (a *sliceBackedAlgorithm[T]) AddAtIndex(index int, item T) {
+func (a *sliceAlgorithm[T]) AddAtIndex(index int, item T) {
 	a.growIfRequired()
 	// move items out of the way either at the end or at the beginning -- whichever requires fewer items to move
 	if 2*index < a.size {
@@ -65,7 +65,7 @@ func (a *sliceBackedAlgorithm[T]) AddAtIndex(index int, item T) {
 	a.size++
 }
 
-func (a *sliceBackedAlgorithm[T]) RemoveAtIndex(index int) T {
+func (a *sliceAlgorithm[T]) RemoveAtIndex(index int) T {
 	var item T
 	// move item at index to first or last position -- whichever requires fewer swaps and remove it
 	if 2*index < a.size-1 {
@@ -96,23 +96,23 @@ func (a *sliceBackedAlgorithm[T]) RemoveAtIndex(index int) T {
 	return item
 }
 
-func (a *sliceBackedAlgorithm[T]) Iterator() collection.Iterator[T] {
+func (a *sliceAlgorithm[T]) Iterator() collection.Iterator[T] {
 	return collection.ToIterator[T](a)
 }
 
 // normalizeIndex makes sure that index that comes from the outer code which
 // is going to be in range [0..size-1] to be in range [firstItemIndex..lastItemIndex-1]
-// that sliceBackedAlgorithm understands
-func (a *sliceBackedAlgorithm[T]) normalizeIndex(index int) int {
+// that sliceAlgorithm understands
+func (a *sliceAlgorithm[T]) normalizeIndex(index int) int {
 	return (a.firstItemIndex + index) % a.capacity()
 }
 
-func (a *sliceBackedAlgorithm[T]) capacity() int {
+func (a *sliceAlgorithm[T]) capacity() int {
 	return len(a.slice)
 }
 
 // growIfRequired resizes the slice to twice capacity when it's full.
-func (a *sliceBackedAlgorithm[T]) growIfRequired() {
+func (a *sliceAlgorithm[T]) growIfRequired() {
 	if a.size == a.capacity() {
 		a.resize(a.capacity() * 2)
 	}
@@ -121,14 +121,14 @@ func (a *sliceBackedAlgorithm[T]) growIfRequired() {
 // shrinkIfRequired resizes the slice to half the size when it's quarter full.
 // The resize is done at quarter capacity to avoid "thrashing" (constant resizing)
 // when working with half-full slice and doing add-remove operations.
-func (a *sliceBackedAlgorithm[T]) shrinkIfRequired() {
+func (a *sliceAlgorithm[T]) shrinkIfRequired() {
 	if a.size > 0 && a.size == a.capacity()/4 {
 		a.resize(a.capacity() / 2)
 	}
 }
 
 // resize resizes the slice to have len == capacity.
-func (a *sliceBackedAlgorithm[T]) resize(capacity int) {
+func (a *sliceAlgorithm[T]) resize(capacity int) {
 	slice := makeSlice(capacity)
 	for index := 0; index < a.size; index++ {
 		slice[index] = a.Get(index)
@@ -138,6 +138,6 @@ func (a *sliceBackedAlgorithm[T]) resize(capacity int) {
 	a.lastItemIndex = a.size
 }
 
-func (a *sliceBackedAlgorithm[T]) swap(index1, index2 int) {
+func (a *sliceAlgorithm[T]) swap(index1, index2 int) {
 	collection.Swap[T](a, index1, index2)
 }
