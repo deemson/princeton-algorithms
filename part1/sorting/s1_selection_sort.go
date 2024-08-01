@@ -1,12 +1,12 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 )
 
 // SelectionSort does ~N^2/2 compares and N swaps
-func SelectionSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
+func SelectionSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
 	// Outer loop that iterates through all the items with the intention to swap at the end.
 	for outerLoopIndex := 0; outerLoopIndex < array.Size(); outerLoopIndex++ {
 		// Each iteration of the outer loop it tries to find the minimum item index to the right
@@ -19,6 +19,6 @@ func SelectionSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
 				mininumItemIndex = innerLoopIndex
 			}
 		}
-		indexed.Swap[T](array, outerLoopIndex, mininumItemIndex)
+		collection.Swap[T](array, outerLoopIndex, mininumItemIndex)
 	}
 }

@@ -1,9 +1,7 @@
 package deque
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/iterator"
-	"github.com/deemson/princeton-algorithms/lib/collection/sequence"
-	"github.com/deemson/princeton-algorithms/lib/collection/sized"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 )
 
 type Deque[T any] struct {
@@ -11,19 +9,19 @@ type Deque[T any] struct {
 }
 
 func (d Deque[T]) IsEmpty() bool {
-	return sized.IsEmpty(d)
+	return collection.IsEmpty(d)
 }
 
 func (d Deque[T]) Size() int {
 	return d.algorithm.Size()
 }
 
-func (d Deque[T]) Iterator() iterator.Iterator[T] {
+func (d Deque[T]) Iterator() collection.Iterator[T] {
 	return d.algorithm.Iterator()
 }
 
 func (d Deque[T]) ToSlice() []T {
-	return sequence.ToSlice[T](d)
+	return collection.ToSlice[T](d)
 }
 
 func (d Deque[T]) AddAtIndex(index int, item T) {

@@ -2,20 +2,19 @@ package sorting
 
 import (
 	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 )
 
 // MergeSort is a divide and conquer (split-sort-merge) algorithm.
 // The execution time is as fast as O(N*log2(N)).
 // Traditional implementation via recursion.
-func MergeSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
+func MergeSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
 	aux := collection.Slice(make([]T, array.Size()))
 	mergeSort(array, aux, less, 0, array.Size()-1)
 }
 
 // BottomUpMergeSort implements the same merge sort only without recursion
-func BottomUpMergeSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
+func BottomUpMergeSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
 	aux := collection.Slice(make([]T, array.Size()))
 	// partitionSize size grows as 1 2 4 8 ...
 	partitionSize := 1
@@ -29,7 +28,7 @@ func BottomUpMergeSort[T any](array indexed.SizedMutable[T], less compare.Func[T
 	}
 }
 
-func mergeSort[T any](array, aux indexed.SizedMutable[T], less compare.Func[T], lo, hi int) {
+func mergeSort[T any](array, aux collection.SizedIndexedMutable[T], less compare.Func[T], lo, hi int) {
 	// If the thresholds overlap the sorting is done.
 	if lo >= hi {
 		return
@@ -47,7 +46,7 @@ func mergeSort[T any](array, aux indexed.SizedMutable[T], less compare.Func[T], 
 // merge merges two parts of the indexed array together via temporary aux storage array.
 // It assumes that both halves of the array are sorted individually, and they need to be merged
 // together so that the result is sorted as well.
-func merge[T any](array, aux indexed.SizedMutable[T], less compare.Func[T], lo, mid, hi int) {
+func merge[T any](array, aux collection.SizedIndexedMutable[T], less compare.Func[T], lo, mid, hi int) {
 	for index := lo; index <= hi; index++ {
 		aux.Set(index, array.Get(index))
 	}

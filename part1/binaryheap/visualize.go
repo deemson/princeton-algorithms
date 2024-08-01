@@ -1,7 +1,7 @@
 package binaryheap
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"strings"
 )
 
@@ -15,7 +15,7 @@ func findIndentationLevel(index int) int {
 	return level
 }
 
-func visualize[T any](array indexed.SizedMutable[T], toString func(item T) string, atIndex int) string {
+func visualize[T any](array collection.SizedIndexedMutable[T], toString func(item T) string, atIndex int) string {
 	indentationLevel := findIndentationLevel(atIndex)
 	lines := make([]string, 1, 3)
 	lines[0] = strings.Repeat("  ", indentationLevel) + toString(array.Get(atIndex))
@@ -30,6 +30,6 @@ func visualize[T any](array indexed.SizedMutable[T], toString func(item T) strin
 	return strings.Join(lines, "\n")
 }
 
-func Visualize[T any](array indexed.SizedMutable[T], toString func(item T) string) string {
+func Visualize[T any](array collection.SizedIndexedMutable[T], toString func(item T) string) string {
 	return visualize(array, toString, 0)
 }

@@ -1,24 +1,24 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 	"math/rand"
 )
 
-func QuickSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
+func QuickSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
 	shuffle(array)
 	quickSort(array, less, 0, array.Size()-1)
 }
 
-func shuffle[T any](array indexed.SizedMutable[T]) {
+func shuffle[T any](array collection.SizedIndexedMutable[T]) {
 	for index := 0; index < array.Size(); index++ {
 		shuffledIndex := rand.Intn(index + 1)
-		indexed.Swap[T](array, index, shuffledIndex)
+		collection.Swap[T](array, index, shuffledIndex)
 	}
 }
 
-func quickSort[T any](array indexed.SizedMutable[T], less compare.Func[T], left, right int) {
+func quickSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T], left, right int) {
 	if left >= right {
 		return
 	}
@@ -30,7 +30,7 @@ func quickSort[T any](array indexed.SizedMutable[T], less compare.Func[T], left,
 // partition is the core of QuickSort. It ensures that randomly picked item from the array
 // is put in such a position, so that all the items to the left are smaller and all items to the right
 // are bigger. Function partition returns the index of the element after this is done.
-func partition[T any](array indexed.SizedMutable[T], less compare.Func[T], left, right int) int {
+func partition[T any](array collection.SizedIndexedMutable[T], less compare.Func[T], left, right int) int {
 	partitioningItem := array.Get(left)
 	leftMarker := left + 1
 	rightMarker := right
@@ -56,10 +56,10 @@ func partition[T any](array indexed.SizedMutable[T], less compare.Func[T], left,
 			break
 		}
 		// swap the found pair, repeat until condition above is met
-		indexed.Swap[T](array, leftMarker, rightMarker)
+		collection.Swap[T](array, leftMarker, rightMarker)
 	}
 	// put partitioned element in place
-	indexed.Swap[T](array, left, rightMarker)
+	collection.Swap[T](array, left, rightMarker)
 	// return it's current index
 	return rightMarker
 }

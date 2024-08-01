@@ -1,7 +1,7 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 	"github.com/deemson/princeton-algorithms/lib/compare"
 )
 
@@ -14,7 +14,7 @@ import (
 // an InsertionSort when the array is almost sorted.
 //
 // The worst-case number of compares used by shell sort with 3x+1 sequence is O(N^1.5).
-func ShellSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
+func ShellSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
 	step := 1
 	// Choosing the biggest step < array.Size() from Knuth's shell sort step sequence (3*x + 1).
 	for step < array.Size()/3 {
@@ -32,7 +32,7 @@ func ShellSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
 				if !less(array.Get(innerLoopIndex), array.Get(innerLoopIndex-step)) {
 					break
 				}
-				indexed.Swap[T](array, innerLoopIndex, innerLoopIndex-step)
+				collection.Swap[T](array, innerLoopIndex, innerLoopIndex-step)
 			}
 		}
 		step /= 3

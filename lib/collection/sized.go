@@ -1,4 +1,4 @@
-package sized
+package collection
 
 type Sized interface {
 	Size() int

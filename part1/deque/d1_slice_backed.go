@@ -1,8 +1,7 @@
 package deque
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection/indexed"
-	"github.com/deemson/princeton-algorithms/lib/collection/iterator"
+	"github.com/deemson/princeton-algorithms/lib/collection"
 )
 
 func makeSlice(capacity int) []any {
@@ -97,8 +96,8 @@ func (a *sliceBackedAlgorithm[T]) RemoveAtIndex(index int) T {
 	return item
 }
 
-func (a *sliceBackedAlgorithm[T]) Iterator() iterator.Iterator[T] {
-	return indexed.ToIterator[T](a)
+func (a *sliceBackedAlgorithm[T]) Iterator() collection.Iterator[T] {
+	return collection.ToIterator[T](a)
 }
 
 // normalizeIndex makes sure that index that comes from the outer code which
@@ -140,5 +139,5 @@ func (a *sliceBackedAlgorithm[T]) resize(capacity int) {
 }
 
 func (a *sliceBackedAlgorithm[T]) swap(index1, index2 int) {
-	indexed.Swap[T](a, index1, index2)
+	collection.Swap[T](a, index1, index2)
 }

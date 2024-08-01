@@ -1,9 +1,5 @@
 package collection
 
-import (
-	"github.com/deemson/princeton-algorithms/lib/collection/iterator"
-)
-
 func Slice[T any](slice []T) *SliceAdapter[T] {
 	return &SliceAdapter[T]{
 		slice: slice,
@@ -26,6 +22,6 @@ func (a *SliceAdapter[T]) Set(index int, item T) {
 	a.slice[index] = item
 }
 
-func (a *SliceAdapter[T]) Iterator() iterator.Iterator[T] {
-	return iterator.FromSlice(a.slice)
+func (a *SliceAdapter[T]) Iterator() Iterator[T] {
+	return IteratorFromSlice(a.slice)
 }
