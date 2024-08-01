@@ -1,9 +1,9 @@
 package symboltable
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/deemson/princeton-algorithms/part1/deque"
+	"github.com/gogolibs/compare"
+	"github.com/gogolibs/iterator"
 )
 
 func RankedSlice[K, V any](less, equal compare.Func[K], capacity int) SymbolTable[K, V] {
@@ -68,26 +68,8 @@ func (a rankedSliceAlgorithm[K, V]) Delete(key K) bool {
 	return false
 }
 
-func (a rankedSliceAlgorithm[K, V]) Iterator() collection.Iterator[Pair[K, V]] {
+func (a rankedSliceAlgorithm[K, V]) Iterator() iterator.Iterator[Pair[K, V]] {
 	return a.deque.Iterator()
-}
-
-func (a rankedSliceAlgorithm[K, V]) keys() Set[K] {
-	d := deque.Slice[Pair[K, struct{}]](a.Size() * 2)
-	a.deque.Each(func(pair Pair[K, V]) bool {
-		d.AddLast(Pair[K, struct{}]{
-			Key:   pair.Key,
-			Value: struct{}{},
-		})
-		return true
-	})
-	return Set[K]{
-		algorithm: rankedSliceAlgorithm[K, struct{}]{
-			deque: d,
-			less:  a.less,
-			equal: a.equal,
-		},
-	}
 }
 
 // rank returns the number of keys in this symbol table strictly less than key

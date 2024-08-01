@@ -1,15 +1,15 @@
 package binaryheap
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 func Swim[T any](array collection.SizedIndexedMutable[T], less compare.Func[T], fromIndex, toIndex int) {
 	childIndex := fromIndex
 	parentIndex := ParentIndex(childIndex)
 	for parentIndex >= toIndex && less(array.Get(childIndex), array.Get(parentIndex)) {
-		collection.Swap[T](array, childIndex, parentIndex)
+		collection.SwapIndexes[T](array, childIndex, parentIndex)
 		childIndex = parentIndex
 		parentIndex = ParentIndex(childIndex)
 	}

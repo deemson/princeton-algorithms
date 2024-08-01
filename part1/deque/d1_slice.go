@@ -1,7 +1,8 @@
 package deque
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/iterator"
 )
 
 func makeSlice(capacity int) []any {
@@ -96,7 +97,7 @@ func (a *sliceAlgorithm[T]) RemoveAtIndex(index int) T {
 	return item
 }
 
-func (a *sliceAlgorithm[T]) Iterator() collection.Iterator[T] {
+func (a *sliceAlgorithm[T]) Iterator() iterator.Iterator[T] {
 	return collection.ToIterator[T](a)
 }
 
@@ -139,5 +140,5 @@ func (a *sliceAlgorithm[T]) resize(capacity int) {
 }
 
 func (a *sliceAlgorithm[T]) swap(index1, index2 int) {
-	collection.Swap[T](a, index1, index2)
+	collection.SwapIndexes[T](a, index1, index2)
 }

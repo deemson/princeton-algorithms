@@ -1,8 +1,6 @@
 package deque
 
-import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-)
+import "github.com/gogolibs/iterator"
 
 func LinkedList[T any]() Deque[T] {
 	return Deque[T]{
@@ -28,7 +26,7 @@ func (a *linedListAlgorithm[T]) Get(index int) T {
 	return a.nodeAtIndex(index).item
 }
 
-func (a *linedListAlgorithm[T]) Iterator() collection.Iterator[T] {
+func (a *linedListAlgorithm[T]) Iterator() iterator.Iterator[T] {
 	return &linkedListIterator[T]{
 		node: a.head,
 	}

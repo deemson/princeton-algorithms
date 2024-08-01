@@ -1,8 +1,8 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 // ShellSort is similar to previous algorithm (InsertionSort).
@@ -32,7 +32,7 @@ func ShellSort[T any](array collection.SizedIndexedMutable[T], less compare.Func
 				if !less(array.Get(innerLoopIndex), array.Get(innerLoopIndex-step)) {
 					break
 				}
-				collection.Swap[T](array, innerLoopIndex, innerLoopIndex-step)
+				collection.SwapIndexes[T](array, innerLoopIndex, innerLoopIndex-step)
 			}
 		}
 		step /= 3

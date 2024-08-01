@@ -1,7 +1,8 @@
 package deque
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/iterator"
 )
 
 type Deque[T any] struct {
@@ -16,7 +17,7 @@ func (d Deque[T]) Size() int {
 	return d.algorithm.Size()
 }
 
-func (d Deque[T]) Iterator() collection.Iterator[T] {
+func (d Deque[T]) Iterator() iterator.Iterator[T] {
 	return d.algorithm.Iterator()
 }
 
@@ -68,5 +69,5 @@ func (d Deque[T]) Set(index int, item T) {
 }
 
 func (d Deque[T]) Each(f func(item T) bool) bool {
-	return collection.Each(d.Iterator(), f)
+	return iterator.ForEach(d.Iterator(), f)
 }

@@ -1,7 +1,7 @@
 package binaryheap
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
+	"github.com/gogolibs/collection"
 	"strings"
 )
 

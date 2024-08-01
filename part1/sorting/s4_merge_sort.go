@@ -1,21 +1,21 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 // MergeSort is a divide and conquer (split-sort-merge) algorithm.
 // The execution time is as fast as O(N*log2(N)).
 // Traditional implementation via recursion.
 func MergeSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
-	aux := collection.Slice(make([]T, array.Size()))
+	aux := collection.NewSliceAdapter(make([]T, array.Size()))
 	mergeSort(array, aux, less, 0, array.Size()-1)
 }
 
 // BottomUpMergeSort implements the same merge sort only without recursion
 func BottomUpMergeSort[T any](array collection.SizedIndexedMutable[T], less compare.Func[T]) {
-	aux := collection.Slice(make([]T, array.Size()))
+	aux := collection.NewSliceAdapter(make([]T, array.Size()))
 	// partitionSize size grows as 1 2 4 8 ...
 	partitionSize := 1
 	for partitionSize < array.Size() {

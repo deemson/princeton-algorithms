@@ -2,8 +2,8 @@ package binaryheap
 
 import (
 	"fmt"
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 func ParentIndex(index int) int {

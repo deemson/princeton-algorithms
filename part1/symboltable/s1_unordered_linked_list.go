@@ -1,9 +1,9 @@
 package symboltable
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/deemson/princeton-algorithms/part1/deque"
+	"github.com/gogolibs/compare"
+	"github.com/gogolibs/iterator"
 )
 
 func UnorderedLinkedList[K, V any](equal compare.Func[K]) SymbolTable[K, V] {
@@ -20,7 +20,7 @@ type unorderedLinkedListAlgorithm[K, V any] struct {
 	equal compare.Func[K]
 }
 
-func (a unorderedLinkedListAlgorithm[K, V]) Iterator() collection.Iterator[Pair[K, V]] {
+func (a unorderedLinkedListAlgorithm[K, V]) Iterator() iterator.Iterator[Pair[K, V]] {
 	return a.deque.Iterator()
 }
 
@@ -77,21 +77,4 @@ func (a unorderedLinkedListAlgorithm[K, V]) Delete(key K) bool {
 		a.deque.RemoveAtIndex(indexToDelete)
 	}
 	return isFound
-}
-
-func (a unorderedLinkedListAlgorithm[K, V]) keys() Set[K] {
-	d := deque.LinkedList[Pair[K, struct{}]]()
-	a.deque.Each(func(pair Pair[K, V]) bool {
-		d.AddLast(Pair[K, struct{}]{
-			Key:   pair.Key,
-			Value: struct{}{},
-		})
-		return true
-	})
-	return Set[K]{
-		algorithm: unorderedLinkedListAlgorithm[K, struct{}]{
-			deque: d,
-			equal: a.equal,
-		},
-	}
 }

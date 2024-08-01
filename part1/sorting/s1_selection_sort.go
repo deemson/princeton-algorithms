@@ -1,8 +1,8 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 // SelectionSort does ~N^2/2 compares and N swaps
@@ -19,6 +19,6 @@ func SelectionSort[T any](array collection.SizedIndexedMutable[T], less compare.
 				mininumItemIndex = innerLoopIndex
 			}
 		}
-		collection.Swap[T](array, outerLoopIndex, mininumItemIndex)
+		collection.SwapIndexes[T](array, outerLoopIndex, mininumItemIndex)
 	}
 }

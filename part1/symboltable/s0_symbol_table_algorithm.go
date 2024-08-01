@@ -1,7 +1,7 @@
 package symboltable
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
+	"github.com/gogolibs/collection"
 )
 
 type algorithm[K, V any] interface {
@@ -10,5 +10,4 @@ type algorithm[K, V any] interface {
 	Get(key K) (V, bool)
 	Set(key K, value V)
 	Delete(key K) bool
-	keys() Set[K]
 }

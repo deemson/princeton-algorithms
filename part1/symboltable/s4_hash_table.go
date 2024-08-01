@@ -1,10 +1,10 @@
 package symboltable
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/deemson/princeton-algorithms/lib/hash"
 	"github.com/deemson/princeton-algorithms/part1/deque"
+	"github.com/gogolibs/compare"
+	"github.com/gogolibs/iterator"
 )
 
 func makeSliceOfDeques[K, V any](size int) []deque.Deque[Pair[K, V]] {
@@ -41,12 +41,12 @@ func (a *hashTableAlgorithm[K, V]) Size() int {
 	return a.size
 }
 
-func (a *hashTableAlgorithm[K, V]) Iterator() collection.Iterator[Pair[K, V]] {
-	iterators := make([]collection.Iterator[Pair[K, V]], len(a.slice))
+func (a *hashTableAlgorithm[K, V]) Iterator() iterator.Iterator[Pair[K, V]] {
+	iterators := make([]iterator.Iterator[Pair[K, V]], len(a.slice))
 	for index, d := range a.slice {
 		iterators[index] = d.Iterator()
 	}
-	return collection.ChainIterators(iterators...)
+	return iterator.Chain(iterators...)
 }
 
 func (a *hashTableAlgorithm[K, V]) Get(key K) (V, bool) {
@@ -90,29 +90,6 @@ func (a *hashTableAlgorithm[K, V]) Delete(key K) bool {
 		index++
 		return true
 	})
-}
-
-func (a *hashTableAlgorithm[K, V]) keys() Set[K] {
-	slice := makeSliceOfDeques[K, struct{}](a.size)
-	for index, d := range a.slice {
-		d.Each(func(pair Pair[K, V]) bool {
-			slice[index].AddLast(Pair[K, struct{}]{
-				Key:   pair.Key,
-				Value: struct{}{},
-			})
-			return true
-		})
-	}
-	return Set[K]{
-		algorithm: &hashTableAlgorithm[K, struct{}]{
-			size:                 a.size,
-			hash:                 a.hash,
-			occupiedSliceIndexes: a.occupiedSliceIndexes,
-			slice:                slice,
-			equal:                a.equal,
-			loadFactor:           a.loadFactor,
-		},
-	}
 }
 
 func (a *hashTableAlgorithm[K, V]) set(pair Pair[K, V]) {

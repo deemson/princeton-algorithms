@@ -1,8 +1,8 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 // InsertionSort does on average ~1/4N^2 compares and ~1/4N^2 swaps.
@@ -12,7 +12,7 @@ func InsertionSort[T any](array collection.SizedIndexedMutable[T], less compare.
 		// Every added item tries to find its place in the left part (sorted part) of the entire array.
 		for innerLoopIndex := outerLoopIndex; innerLoopIndex > 0; innerLoopIndex-- {
 			if less(array.Get(innerLoopIndex), array.Get(innerLoopIndex-1)) {
-				collection.Swap[T](array, innerLoopIndex, innerLoopIndex-1)
+				collection.SwapIndexes[T](array, innerLoopIndex, innerLoopIndex-1)
 			}
 		}
 	}

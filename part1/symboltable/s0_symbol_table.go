@@ -2,7 +2,10 @@ package symboltable
 
 import (
 	"fmt"
-	"github.com/deemson/princeton-algorithms/lib/collection"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
+	"github.com/gogolibs/iterator"
+	"sort"
 )
 
 type SymbolTable[K, V any] struct {
@@ -17,7 +20,7 @@ func (t SymbolTable[K, V]) Size() int {
 	return t.algorithm.Size()
 }
 
-func (t SymbolTable[K, V]) Iterator() collection.Iterator[Pair[K, V]] {
+func (t SymbolTable[K, V]) Iterator() iterator.Iterator[Pair[K, V]] {
 	return t.algorithm.Iterator()
 }
 
@@ -61,6 +64,16 @@ func (t SymbolTable[K, V]) MustDeleteMany(keys ...K) {
 	}
 }
 
-func (t SymbolTable[K, V]) Keys() Set[K] {
-	return t.algorithm.keys()
+func (t SymbolTable[K, V]) Keys() []K {
+	return iterator.ToSlice[K](iterator.Transform(t.algorithm.Iterator(), func(pair Pair[K, V]) K {
+		return pair.Key
+	}), t.Size())
+}
+
+func (t SymbolTable[K, V]) KeysSorted(less compare.Func[K]) []K {
+	keys := t.Keys()
+	sort.Slice(keys, func(i, j int) bool {
+		return less(keys[i], keys[j])
+	})
+	return keys
 }

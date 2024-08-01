@@ -1,9 +1,9 @@
 package symboltable_test
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/deemson/princeton-algorithms/lib/hash"
 	"github.com/deemson/princeton-algorithms/part1/symboltable"
+	"github.com/gogolibs/compare"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -32,19 +32,19 @@ func (p allAlgorithmsParams[K, V]) do(t *testing.T, f func(t *testing.T, symbolT
 
 func TestSymbolTable(t *testing.T) {
 	allAlgorithmsParams[string, int]{
-		less:  compare.OrderedLess[string],
-		equal: compare.ComparableEqual[string],
+		less:  compare.Less[string],
+		equal: compare.Equal[string],
 		hash:  hash.String,
 	}.do(t, func(t *testing.T, symbolTable symboltable.SymbolTable[string, int]) {
 		symbolTable.Set("one", 1)
 		symbolTable.Set("two", 2)
 		symbolTable.Set("three", 3)
-		assert.Equal(t, []string{"one", "three", "two"}, symbolTable.Keys().ToSortedSlice(compare.OrderedLess[string]))
-		assert.Equal(t, []int{1, 3, 2}, symbolTable.MustGetMany(symbolTable.Keys().ToSortedSlice(compare.OrderedLess[string])...))
+		assert.Equal(t, []string{"one", "three", "two"}, symbolTable.KeysSorted(compare.Less[string]))
+		assert.Equal(t, []int{1, 3, 2}, symbolTable.MustGetMany(symbolTable.KeysSorted(compare.Less[string])...))
 		symbolTable.Set("two", 4)
-		assert.Equal(t, []int{1, 3, 4}, symbolTable.MustGetMany(symbolTable.Keys().ToSortedSlice(compare.OrderedLess[string])...))
+		assert.Equal(t, []int{1, 3, 4}, symbolTable.MustGetMany(symbolTable.KeysSorted(compare.Less[string])...))
 		symbolTable.Delete("two")
-		assert.Equal(t, []int{1, 3}, symbolTable.MustGetMany(symbolTable.Keys().ToSortedSlice(compare.OrderedLess[string])...))
+		assert.Equal(t, []int{1, 3}, symbolTable.MustGetMany(symbolTable.KeysSorted(compare.Less[string])...))
 		symbolTable.MustDeleteMany("one", "three")
 		assert.True(t, symbolTable.IsEmpty())
 	})

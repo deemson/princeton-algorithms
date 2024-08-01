@@ -1,8 +1,8 @@
 package sorting
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 	"math/rand"
 )
 
@@ -14,7 +14,7 @@ func QuickSort[T any](array collection.SizedIndexedMutable[T], less compare.Func
 func shuffle[T any](array collection.SizedIndexedMutable[T]) {
 	for index := 0; index < array.Size(); index++ {
 		shuffledIndex := rand.Intn(index + 1)
-		collection.Swap[T](array, index, shuffledIndex)
+		collection.SwapIndexes[T](array, index, shuffledIndex)
 	}
 }
 
@@ -56,10 +56,10 @@ func partition[T any](array collection.SizedIndexedMutable[T], less compare.Func
 			break
 		}
 		// swap the found pair, repeat until condition above is met
-		collection.Swap[T](array, leftMarker, rightMarker)
+		collection.SwapIndexes[T](array, leftMarker, rightMarker)
 	}
 	// put partitioned element in place
-	collection.Swap[T](array, left, rightMarker)
+	collection.SwapIndexes[T](array, left, rightMarker)
 	// return it's current index
 	return rightMarker
 }

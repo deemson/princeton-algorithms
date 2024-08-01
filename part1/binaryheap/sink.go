@@ -1,8 +1,8 @@
 package binaryheap
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 )
 
 func Sink[T any](array collection.SizedIndexedMutable[T], less compare.Func[T], fromIndex, toIndex int) {
@@ -15,7 +15,7 @@ func Sink[T any](array collection.SizedIndexedMutable[T], less compare.Func[T], 
 		if less(array.Get(parentIndex), array.Get(childIndex)) {
 			break
 		}
-		collection.Swap[T](array, parentIndex, childIndex)
+		collection.SwapIndexes[T](array, parentIndex, childIndex)
 		parentIndex = childIndex
 		childIndex = ChildIndex(parentIndex)
 	}

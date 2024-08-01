@@ -1,9 +1,9 @@
 package binaryheap_test
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
-	"github.com/deemson/princeton-algorithms/lib/compare"
 	"github.com/deemson/princeton-algorithms/part1/binaryheap"
+	"github.com/gogolibs/collection"
+	"github.com/gogolibs/compare"
 	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
@@ -41,10 +41,10 @@ func TestBinaryHeapOrder(t *testing.T) {
 		},
 	}
 	for _, testCase := range testCases {
-		array := collection.Slice(sliceStringIntoCharacters(testCase.input))
-		binaryheap.Order(array, compare.OrderedLess[string])
+		array := collection.NewSliceAdapter(sliceStringIntoCharacters(testCase.input))
+		binaryheap.Order(array, compare.Less[string])
 		actual := binaryheap.Visualize(array, stringAsIs)
 		assert.Equal(t, strings.Join(testCase.expected, "\n"), actual)
-		assert.NoError(t, binaryheap.ValidateOrder(array, compare.OrderedLess[string]))
+		assert.NoError(t, binaryheap.ValidateOrder(array, compare.Less[string]))
 	}
 }

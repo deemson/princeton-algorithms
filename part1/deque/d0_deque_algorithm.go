@@ -1,7 +1,7 @@
 package deque
 
 import (
-	"github.com/deemson/princeton-algorithms/lib/collection"
+	"github.com/gogolibs/iterator"
 )
 
 type algorithm[T any] interface {
@@ -10,5 +10,5 @@ type algorithm[T any] interface {
 	Set(index int, item T)
 	AddAtIndex(index int, item T)
 	RemoveAtIndex(index int) T
-	Iterator() collection.Iterator[T]
+	Iterator() iterator.Iterator[T]
 }
