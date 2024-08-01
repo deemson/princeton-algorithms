@@ -9,7 +9,7 @@ import (
 func HeapSort[T any](array indexed.SizedMutable[T], less compare.Func[T]) {
 	reversedLess := compare.Reversed(less)
 	// Binary heap order with reversed less so that max (instead of min) element is on top
-	binaryheap.BinaryHeapOrder(array, reversedLess)
+	binaryheap.Order(array, reversedLess)
 	for index := array.Size() - 1; index > 0; index-- {
 		// move max element in place (first to the end, second to the end-1, etc)
 		indexed.Swap[T](array, 0, index)

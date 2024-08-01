@@ -42,9 +42,9 @@ func TestBinaryHeapOrder(t *testing.T) {
 	}
 	for _, testCase := range testCases {
 		array := collection.Slice(sliceStringIntoCharacters(testCase.input))
-		binaryheap.BinaryHeapOrder(array, compare.OrderedLess[string])
+		binaryheap.Order(array, compare.OrderedLess[string])
 		actual := binaryheap.Visualize(array, stringAsIs)
 		assert.Equal(t, strings.Join(testCase.expected, "\n"), actual)
-		assert.NoError(t, binaryheap.ValidateBinaryHeapOrder(array, compare.OrderedLess[string]))
+		assert.NoError(t, binaryheap.ValidateOrder(array, compare.OrderedLess[string]))
 	}
 }
